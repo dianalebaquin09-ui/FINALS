@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CoffeeMoo - Sign Up</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav>
+        <a href="HOME.html">Home</a>
+        <a href="MENU.html">Our Menu</a>
+        <a href="ContactUs.html">Contact</a>
+            <a href="SignUp.html">Sign Up</a>
+            <a href="LogIn.html">Log In</a>
+            <a href="#cart">🛒</a>
+        <div class="user-info">
+            <span id="user-name"></span>
+        </div>
+    </nav>
+    <div class="container" id="signup">
+        <div class="content">
+            <h1>Sign Up</h1>
+            <p>Join our community to receive exclusive offers, updates, and more!</p>
+            <form id="signup-form">
+                <label for="username">Username:</label><br>
+                <input type="text" id="username" name="username" required><br>
+                <label for="email">Email:</label><br>
+                <input type="email" id="email" name="email" required><br>
+                <label for="password">Password:</label><br>
+                <input type="password" id="password" name="password" required><br>
+                <button type="submit">Sign Up</button>
+            </form>
+            <p>Already have an account? <a href="#login" onclick="showLogin()">Log In</a></p>
+        </div>
+    </div>
+
+    <div class="container" id="login" style="display:none;">
+        <div class="content">
+            <h1>Log In</h1>
+            <p>Welcome back! Please log in to continue.</p>
+            <form id="login-form">
+                <label for="login-username">Username:</label><br>
+                <input type="text" id="login-username" name="username" required><br>
+                <label for="login-password">Password:</label><br>
+                <input type="password" id="login-password" name="password" required><br>
+                <button type="submit">Log In</button>
+            </form>
+            <p>Don't have an account? <a href="#signup" onclick="showSignup()">Sign Up</a></p>
+        </div>
+    </div>
+
+    <div class="container" id="welcome" style="display:none;">
+        <div class="content">
+            <h1>Welcome, <span id="welcome-username"></span>!</h1>
+            <p>Thank you for logging in. Enjoy our exclusive offers and updates!</p>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 CoffeeMoo Shop. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const users = {};
+
+        document.getElementById('signup-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            if (username in users) {
+                alert('Username already taken.');
+            } else {
+                users[username] = { email: email, password: password };
+                alert('Sign up successful! Please log in.');
+                showLogin();
+            }
+        });
+
+        document.getElementById('login-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const username = document.getElementById('login-username').value;
+            const password = document.getElementById('login-password').value;
+
+            if (username in users && users[username].password === password) {
+                document.getElementById('welcome-username').textContent = username;
+                document.getElementById('user-name').textContent = username;
+        	document.querySelector('nav a[href="LogIn.html"]').textContent = "Log Out";
+                showWelcome();
+            } else {
+                alert('Invalid username or password.');
+            }
+        });
+
+        function showSignup() {
+            document.getElementById('signup').style.display = 'block';
+            document.getElementById('login').style.display = 'none';
+            document.getElementById('welcome').style.display = 'none';
+        }
+
+        function showLogin() {
+            document.getElementById('signup').style.display = 'none';
+            document.getElementById('login').style.display = 'block';
+            document.getElementById('welcome').style.display = 'none';
+        }
+
+        function showWelcome() {
+            document.getElementById('signup').style.display = 'none';
+            document.getElementById('login').style.display = 'none';
+            document.getElementById('welcome').style.display = 'block';
+        }
+    </script>
+</body>
+</html>

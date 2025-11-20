@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CoffeeMoo - Our Menu</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            color: #000;
+        }
+        nav {
+            display: flex;
+            justify-content: space-around;
+            background-color: #2d2926;
+            padding: 10px 0;
+            align-items: center;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 15px;
+            cursor: pointer;
+        }
+        .menu-section {
+            padding: 60px 20px;
+            background-image: url('BG2.jpg');
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+            text-align: center;
+        }
+        .menu-section h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: white;
+            text-shadow: 2px 2px 4px #000000;
+            border-bottom: 2px solid #c9a66b;
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+        .menu-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-bottom: 50px;
+        }
+        .menu-item {
+            background-color: #4b3832;
+            color: #fff;
+            border-radius: 10px;
+            width: 30%;
+            margin: 20px 0;
+            padding: 20px;
+            text-align: left;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .menu-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            background-color: #ddd;
+        }
+        .menu-item h3 {
+            margin-top: 15px;
+            color: #c9a66b;
+            margin-bottom: 10px;
+        }
+        .menu-item p {
+            font-size: 1em;
+            margin-bottom: 10px;
+        }
+        .price {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #c9a66b; /* Gold color for price */
+            margin: 10px 0;
+        }
+        .add-to-cart {
+            background-color: #c9a66b;
+            border: none;
+            color: black;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin-top: auto; /* Pushes button to bottom */
+            cursor: pointer;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        .add-to-cart:hover {
+            background-color: #fff;
+        }
+        footer {
+            background-color: #2d2926;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+        
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .menu-item {
+                width: 90%;
+            }
+            nav {
+                flex-direction: column;
+            }
+            nav div {
+                margin-top: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="HOME.html">Home</a>
+        <a href="MENU.html">Our Menu</a>
+        <a href="ContactUs.html">Contact</a>
+        <div>
+            <a href="SignUp.html">Sign Up</a>
+            <a href="LogIn.html">Log In</a>
+            <a href="#cart">🛒</a>
+        </div>
+    </nav>
+
+    <div class="menu-section" id="menu">
+        <!-- COFFEE SECTION (Exactly 7 Items) -->
+        <h2>Coffee & Drinks</h2>
+        <div class="menu-container">
+            <div class="menu-item">
+                <img src="Espre.jpg" alt="Espresso">
+                <h3>Espresso</h3>
+                <p>A strong and rich coffee shot, perfect for a quick caffeine boost.</p>
+                <p class="price">₱120.00</p>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+            <div class="menu-item">
+                <img src="Cap.jpg" alt="Cappuccino">
+                <h3>Cappuccino</h3>
+                <p>A classic Italian coffee with steamed milk foam, offering a creamy and delightful taste.</p>
+                <p class="price">₱140.00</p>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+            <div class="menu-item">
+                <img src="Latte.jpg" alt="Latte">
+                <h3>Latte</h3>
+                <p>A smooth blend of espresso and steamed milk, topped with a light layer of foam.</p>
+                <p class="price">₱150.00</p>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+            <div class="menu-item">
+                <img src="Mocha.jpg" alt="Mocha">
+                <h3>Mocha</h3>
+                <p>A delicious combination of espresso, chocolate, and steamed milk, topped with whipped cream.</p>
+                <p class="price">₱160.00</p>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+            <div class="menu-item">
+                <img src="IcedLat.jpg" alt="Iced Latte">
+                <h3>Iced Latte</h3>
+                <p>A refreshing cold coffee with espresso and chilled milk, served over ice.</p>
+                <p class="price">₱155.00</p>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+            <div class="menu-item">
+                <img src="Afo.jpg" alt="Affogato">
+                <h3>Affogato</h3>
+                <p>A delightful dessert coffee with a shot of hot espresso poured over vanilla ice cream.</p>
+                <p class="price">₱180.00</p>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+            <div class="menu-item">
+                <img src="Coldbrew.jpg" alt="Cold Brew">
+                <h3>Cold Brew</h3>
+                <p>A smooth and refreshing cold coffee brewed over an extended period of time.</p>
+                <p class="price">₱145.00</p>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+        </div>
+
+        <!-- CAKES & DESSERTS SECTION (7 Items Total) -->
+        <h2>Cakes & Desserts</h2>
+        <div class="menu-container">
+            
+            <!-- Item 1 -->
+            <div class="menu-item">
+                <img src="caramel-macchiato-cheesecake.jpg" alt="Caramel Macchiato Cheesecake"> 
+                <h3>Caramel Macchiato Cheesecake</h3>
+                <p>A dreamy cheesecake with the rich flavors of coffee and caramel.</p>
+                <p class="price">₱210.00</p>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+            
+            <!-- Item 2 -->
+            <div class="menu-item">
+                <img src="chocolate-lava dream.jpg" alt="Chocolate Lava Dream">
+                <h3>Chocolate Lava Dream</h3>
+                <p>Rich chocolate cake with a molten center that melts in your mouth.</p>
+                <p class="price">₱195.00</p>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+            
+            <!-- Item 3 -->
+            <div class="menu-item">
+                <img src="lemon-burry-burst.jpg" alt="Lemon Berry Burst">
+                <h3>Lemon Berry Burst</h3>
+                <p>A tangy and sweet delight combining zest of lemon with fresh berries.</p>
+                <p class="price">₱185.00</p>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+            
+            <!-- Item 4 -->
+            <div class="menu-item">
+                <img src="red-velvet-cake.jpg" alt="Red Velvet Cake">
+                <h3>Red Velvet Cake</h3>
+                <p>Classic red velvet sponge with a silky smooth cream cheese frosting.</p>
+                <p class="price">₱200.00</p>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+            
+            <!-- Item 5 -->
+            <div class="menu-item">
+                <img src="ube-delight-cake.jpg" alt="Ube Delight Cake">
+                <h3>Ube Delight Cake</h3>
+                <p>A moist and flavorful traditional purple yam cake with creamy frosting.</p>
+                <p class="price">₱190.00</p>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+
+            <!-- Item 6 (New Filipino Classic) -->
+            <div class="menu-item">
+                <!-- You need to find an image named: classic-sans-rival.jpg -->
+                <img src="classic-sans-rival.jpg" alt="Classic Sans Rival" style="background-color: #ddd;">
+                <h3>Classic Sans Rival</h3>
+                <p>Layers of crunchy cashew meringue and rich French buttercream. A Filipino favorite.</p>
+                <p class="price">₱220.00</p>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+
+            <!-- Item 7 (New Filipino Classic) -->
+            <div class="menu-item">
+                 <!-- You need to find an image named: mango-cream-cake.jpg -->
+                <img src="mango-cream-cake.jpg" alt="Mango Cream Cake" style="background-color: #ddd;">
+                <h3>Mango Cream Cake</h3>
+                <p>Light sponge cake filled with fresh sweet Philippine mangoes and cream.</p>
+                <p class="price">₱230.00</p>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+
+        </div>
+
+    </div>
+    <footer>
+        <p>&copy; 2024 CoffeeMoo Shop. All rights reserved.</p>
+    </footer>
+</body>
+</html>
