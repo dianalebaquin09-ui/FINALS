@@ -127,13 +127,13 @@
 </head>
 <body>
     <nav>
-        <a href="HOME.html">Home</a>
+        <a href="index.html">Home</a>
         <a href="MENU.html">Our Menu</a>
         <a href="ContactUs.html">Contact</a>
         <div>
             <a href="SignUp.html">Sign Up</a>
             <a href="LogIn.html">Log In</a>
-            <a href="#cart">🛒</a>
+            <a href="Cart.html">🛒</a>
         </div>
     </nav>
 
@@ -243,7 +243,6 @@
 
             <!-- Item 6 (New Filipino Classic) -->
             <div class="menu-item">
-                <!-- You need to find an image named: classic-sans-rival.jpg -->
                 <img src="classic-sans-rival.jpg" alt="Classic Sans Rival" style="background-color: #ddd;">
                 <h3>Classic Sans Rival</h3>
                 <p>Layers of crunchy cashew meringue and rich French buttercream. A Filipino favorite.</p>
@@ -253,7 +252,6 @@
 
             <!-- Item 7 (New Filipino Classic) -->
             <div class="menu-item">
-                 <!-- You need to find an image named: mango-cream-cake.jpg -->
                 <img src="mango-cream-cake.jpg" alt="Mango Cream Cake" style="background-color: #ddd;">
                 <h3>Mango Cream Cake</h3>
                 <p>Light sponge cake filled with fresh sweet Philippine mangoes and cream.</p>
@@ -267,5 +265,39 @@
     <footer>
         <p>&copy; 2024 Krema't Kape Shop. All rights reserved.</p>
     </footer>
+
+    <script>
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', function() {
+                const itemContainer = this.parentElement;
+                const title = itemContainer.querySelector('h3').innerText;
+                const priceText = itemContainer.querySelector('.price').innerText;
+                const imageSrc = itemContainer.querySelector('img').getAttribute('src');
+                
+                const price = parseFloat(priceText.replace('₱', '').replace(',', ''));
+
+                const product = {
+                    title: title,
+                    price: price,
+                    image: imageSrc,
+                    quantity: 1
+                };
+
+                let cart = JSON.parse(localStorage.getItem('krematakape_cart')) || [];
+
+                const existingItem = cart.find(item => item.title === product.title);
+
+                if (existingItem) {
+                    existingItem.quantity += 1;
+                } else {
+                    cart.push(product);
+                }
+
+                localStorage.setItem('krematakape_cart', JSON.stringify(cart));
+
+                alert(`${title} added to cart!`);
+            });
+        });
+    </script>
 </body>
 </html>

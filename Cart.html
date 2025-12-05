@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Krema't Kape - Your Cart</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav>
+        <a href="HOME.html">Home</a>
+        <a href="MENU.html">Our Menu</a>
+        <a href="ContactUs.html">Contact</a>
+        <div>
+            <a href="SignUp.html">Sign Up</a>
+            <a href="LogIn.html">Log In</a>
+            <a href="Cart.html">🛒</a>
+        </div>
+    </nav>
+    <div class="container" id="cart-page">
+        <div class="content" style="width: 80%; max-width: 800px;">
+            <h1>Your Cart</h1>
+            <div id="cart-items-container">
+                <table class="cart-table">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Total</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cart-body">
+                    </tbody>
+                </table>
+                <div id="empty-cart-message" style="display:none;">
+                    <p>Your cart is currently empty.</p>
+                    <a href="MENU.html">Go to Menu</a>
+                </div>
+            </div>
+            <div class="cart-total" id="cart-total-section">
+                Total: ₱<span id="grand-total">0.00</span>
+            </div>
+            <div style="text-align: right; margin-top: 20px;">
+                <button id="clear-cart-btn" class="remove-btn" style="background-color: #d9534f; margin-right: 10px;">Clear Cart</button>
+                <button class="checkout-btn" onclick="alert('Checkout feature coming soon!')">Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Krema't Kape Shop. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function loadCart() {
+            const cart = JSON.parse(localStorage.getItem('krematakape_cart')) || [];
+            const tbody = document.getElementById('cart-body');
+            const emptyMsg = document.getElementById('empty-cart-message');
+            const table = document.querySelector('.cart-table');
+            const totalSection = document.getElementById('cart-total-section');
+            const grandTotalSpan = document.getElementById('grand-total');
+
+            tbody.innerHTML = '';
+            let grandTotal = 0;
+
+            if (cart.length === 0) {
+                table.style.display = 'none';
+                totalSection.style.display = 'none';
+                emptyMsg.style.display = 'block';
+                return;
+            } else {
+                table.style.display = 'table';
+                totalSection.style.display = 'block';
+                emptyMsg.style.display = 'none';
+            }
+
+            cart.forEach((item, index) => {
+                const itemTotal = item.price * item.quantity;
+                grandTotal += itemTotal;
+
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td style="display: flex; align-items: center; gap: 10px;">
+                        <img src="${item.image}" alt="${item.title}" class="cart-item-img">
+                        <span>${item.title}</span>
+                    </td>
+                    <td>₱${item.price.toFixed(2)}</td>
+                    <td>
+                        <button onclick="updateQuantity(${index}, -1)" class="qty-btn">-</button>
+                        ${item.quantity}
+                        <button onclick="updateQuantity(${index}, 1)" class="qty-btn">+</button>
+                    </td>
+                    <td>₱${itemTotal.toFixed(2)}</td>
+                    <td><button onclick="removeItem(${index})" class="remove-btn">Remove</button></td>
+                `;
+                tbody.appendChild(row);
+            });
+
+            grandTotalSpan.textContent = grandTotal.toFixed(2);
+        }
+
+        function updateQuantity(index, change) {
+            let cart = JSON.parse(localStorage.getItem('krematakape_cart')) || [];
+            if (cart[index]) {
+                cart[index].quantity += change;
+                if (cart[index].quantity <= 0) {
+                    cart.splice(index, 1);
+                }
+                localStorage.setItem('krematakape_cart', JSON.stringify(cart));
+                loadCart();
+            }
+        }
+
+        function removeItem(index) {
+            let cart = JSON.parse(localStorage.getItem('krematakape_cart')) || [];
+            cart.splice(index, 1);
+            localStorage.setItem('krematakape_cart', JSON.stringify(cart));
+            loadCart();
+        }
+
+        document.getElementById('clear-cart-btn').addEventListener('click', () => {
+            if(confirm('Are you sure you want to clear your cart?')) {
+                localStorage.removeItem('krematakape_cart');
+                loadCart();
+            }
+        });
+        loadCart();
+    </script>
+</body>
+</html>
