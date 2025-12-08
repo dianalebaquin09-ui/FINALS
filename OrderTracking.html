@@ -350,9 +350,18 @@
                         </div>
 
                         <div class="details-section">
-                            <h3>Delivery Method</h3>
+                            <h3>Order Details</h3>
                             <div class="details-item">
-                                <span id="delivery-method-display"></span>
+                                <strong>Delivery Type:</strong>
+                                <span id="delivery-type-display"></span>
+                            </div>
+                            <div class="details-item">
+                                <strong>Delivery Speed:</strong>
+                                <span id="delivery-speed-display"></span>
+                            </div>
+                            <div class="details-item">
+                                <strong>Payment Method:</strong>
+                                <span id="payment-method-display"></span>
                             </div>
                             <div class="details-item" style="margin-top: 20px;">
                                 <strong>Special Instructions:</strong>
@@ -415,11 +424,29 @@
 
             // Display delivery method
             const deliveryMethods = {
-                'standard': 'Standard Delivery (5-7 days)',
-                'express': 'Express Delivery (2-3 days)',
-                'overnight': 'Overnight Delivery'
+                'standard': 'Standard',
+                'express': 'Express',
+                'overnight': 'Overnight',
+                'priority': 'Priority',
+                'saver': 'Saver'
             };
-            document.getElementById('delivery-method-display').textContent = deliveryMethods[order.deliveryMethod] || order.deliveryMethod;
+            document.getElementById('delivery-speed-display').textContent = deliveryMethods[order.deliveryMethod] || order.deliveryMethod;
+
+            // Display delivery type and scheduled time
+            if (order.deliveryType === 'later' && order.scheduledTime) {
+                const scheduledDate = new Date(order.scheduledTime);
+                document.getElementById('delivery-type-display').textContent = 'Scheduled for ' + scheduledDate.toLocaleDateString() + ' at ' + scheduledDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            } else {
+                document.getElementById('delivery-type-display').textContent = 'Deliver Now';
+            }
+
+            // Display payment method
+            const paymentMethods = {
+                'cash': 'Cash on Delivery',
+                'gcash': 'GCash',
+                'maya': 'Maya'
+            };
+            document.getElementById('payment-method-display').textContent = paymentMethods[order.paymentMethod] || order.paymentMethod;
 
             // Display special instructions
             if (order.notes) {

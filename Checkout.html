@@ -11,7 +11,7 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 30px;
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 0 auto;
         }
 
@@ -36,9 +36,15 @@
 
         .summary-item:last-child {
             border-bottom: none;
+        }
+
+        .summary-total {
+            border-bottom: none;
             font-weight: bold;
             font-size: 1.1em;
             margin-top: 10px;
+            padding-top: 10px;
+            border-top: 2px solid #c9a66b;
         }
 
         .checkout-form {
@@ -51,6 +57,24 @@
         .checkout-form h3 {
             color: #c9a66b;
             margin-top: 0;
+        }
+
+        .form-section {
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #555;
+        }
+
+        .form-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .form-section h4 {
+            color: #c9a66b;
+            margin: 0 0 15px 0;
+            font-size: 1em;
         }
 
         .form-group {
@@ -87,6 +111,68 @@
             gap: 15px;
         }
 
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 12px;
+            background-color: #2d2926;
+            border-radius: 5px;
+            cursor: pointer;
+            border: 2px solid #555;
+            transition: border-color 0.3s, background-color 0.3s;
+        }
+
+        .radio-option:hover {
+            border-color: #c9a66b;
+        }
+
+        .radio-option input[type="radio"] {
+            width: auto;
+            margin-top: 3px;
+            cursor: pointer;
+        }
+
+        .radio-option input[type="radio"]:checked ~ .option-content,
+        .radio-option:has(input[type="radio"]:checked) {
+            border-color: #c9a66b;
+            background-color: rgba(201, 166, 107, 0.1);
+        }
+
+        .option-content {
+            flex: 1;
+        }
+
+        .option-title {
+            font-weight: bold;
+            color: #c9a66b;
+            margin-bottom: 3px;
+        }
+
+        .option-details {
+            font-size: 0.85em;
+            color: #ccc;
+            line-height: 1.4;
+        }
+
+        .delivery-option-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 5px;
+        }
+
+        .delivery-price {
+            color: #c9a66b;
+            font-weight: bold;
+        }
+
         .submit-btn {
             background-color: #c9a66b;
             color: #000;
@@ -105,6 +191,11 @@
             background-color: #fff;
         }
 
+        .submit-btn:disabled {
+            background-color: #999;
+            cursor: not-allowed;
+        }
+
         .back-btn {
             background-color: #555;
             color: #fff;
@@ -121,8 +212,21 @@
             background-color: #777;
         }
 
+        .error-message {
+            background-color: #d9534f;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            display: none;
+        }
+
         @media (max-width: 768px) {
             .checkout-container {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
                 grid-template-columns: 1fr;
             }
         }
@@ -166,52 +270,127 @@
 
                 <!-- Checkout Form -->
                 <div class="checkout-form">
-                    <h3>Delivery Information</h3>
+                    <h3>Complete Your Order</h3>
+                    <div class="error-message" id="error-message"></div>
+                    
                     <form id="checkout-form">
-                        <div class="form-group">
-                            <label for="fullname">Full Name:</label>
-                            <input type="text" id="fullname" name="fullname" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="email">Email:</label>
-                            <input type="email" id="email" name="email" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="phone">Phone Number:</label>
-                            <input type="tel" id="phone" name="phone" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="address">Street Address:</label>
-                            <input type="text" id="address" name="address" required>
-                        </div>
-
-                        <div class="form-row">
+                        <!-- Delivery Address Section -->
+                        <div class="form-section">
+                            <h4>Delivery Address</h4>
+                            
                             <div class="form-group">
-                                <label for="city">City:</label>
-                                <input type="text" id="city" name="city" required>
+                                <label for="fullname">Full Name:</label>
+                                <input type="text" id="fullname" name="fullname" required>
                             </div>
+
                             <div class="form-group">
-                                <label for="zipcode">ZIP Code:</label>
-                                <input type="text" id="zipcode" name="zipcode" required>
+                                <label for="email">Email:</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="phone">Phone Number:</label>
+                                <input type="tel" id="phone" name="phone" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="address">Street Address:</label>
+                                <input type="text" id="address" name="address" required>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="city">City:</label>
+                                    <input type="text" id="city" name="city" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="zipcode">ZIP Code:</label>
+                                    <input type="text" id="zipcode" name="zipcode" required>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label for="delivery-method">Delivery Method:</label>
-                            <select id="delivery-method" name="delivery-method" required>
-                                <option value="">Select delivery method</option>
-                                <option value="standard">Standard Delivery (5-7 days) - ₱50</option>
-                                <option value="express">Express Delivery (2-3 days) - ₱100</option>
-                                <option value="overnight">Overnight Delivery - ₱200</option>
-                            </select>
+                        <!-- Delivery Schedule Section -->
+                        <div class="form-section">
+                            <h4>Delivery Schedule</h4>
+                            
+                            <div class="form-group">
+                                <label>Delivery Type:</label>
+                                <div class="radio-group" id="delivery-type-group">
+                                    <label class="radio-option">
+                                        <input type="radio" name="delivery-type" value="now" checked onchange="updateDeliveryOptions()">
+                                        <div class="option-content">
+                                            <div class="option-title">Deliver Now</div>
+                                            <div class="option-details">Get your order as soon as possible</div>
+                                        </div>
+                                    </label>
+                                    <label class="radio-option">
+                                        <input type="radio" name="delivery-type" value="later" onchange="updateDeliveryOptions()">
+                                        <div class="option-content">
+                                            <div class="option-title">Order for Later</div>
+                                            <div class="option-details">Schedule delivery for a specific time</div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group" id="scheduled-time-group" style="display: none;">
+                                <label for="scheduled-time">Scheduled Delivery Time:</label>
+                                <input type="datetime-local" id="scheduled-time" name="scheduled-time">
+                            </div>
                         </div>
 
-                        <div class="form-group">
-                            <label for="notes">Special Instructions:</label>
-                            <textarea id="notes" name="notes" rows="3" placeholder="Add any special delivery instructions..."></textarea>
+                        <!-- Delivery Method Section -->
+                        <div class="form-section">
+                            <h4>Delivery Method</h4>
+                            
+                            <div class="form-group">
+                                <label>Choose Delivery Speed:</label>
+                                <div class="radio-group" id="delivery-method-group">
+                                    <!-- Options will be populated by JavaScript -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Payment Method Section -->
+                        <div class="form-section">
+                            <h4>Payment Method</h4>
+                            
+                            <div class="form-group">
+                                <label>Select Payment Method:</label>
+                                <div class="radio-group">
+                                    <label class="radio-option">
+                                        <input type="radio" name="payment-method" value="cash" checked>
+                                        <div class="option-content">
+                                            <div class="option-title">Cash on Delivery</div>
+                                            <div class="option-details">Pay when your order is delivered</div>
+                                        </div>
+                                    </label>
+                                    <label class="radio-option">
+                                        <input type="radio" name="payment-method" value="gcash">
+                                        <div class="option-content">
+                                            <div class="option-title">GCash</div>
+                                            <div class="option-details">Fast and secure mobile payment</div>
+                                        </div>
+                                    </label>
+                                    <label class="radio-option">
+                                        <input type="radio" name="payment-method" value="maya">
+                                        <div class="option-content">
+                                            <div class="option-title">Maya</div>
+                                            <div class="option-details">Digital wallet payment</div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Special Instructions -->
+                        <div class="form-section">
+                            <h4>Special Instructions (Optional)</h4>
+                            <div class="form-group">
+                                <label for="notes">Add delivery notes:</label>
+                                <textarea id="notes" name="notes" rows="3" placeholder="E.g., Ring doorbell twice, leave at gate..."></textarea>
+                            </div>
                         </div>
 
                         <button type="submit" class="submit-btn">Place Order</button>
@@ -226,6 +405,48 @@
     </footer>
 
     <script>
+        // Delivery options with pricing based on item count
+        const deliveryOptions = {
+            priority: {
+                name: 'Priority',
+                description: 'Fastest delivery available',
+                basePrice: 150,
+                pricePerItem: 10,
+                getEstimate: (itemCount) => {
+                    if (itemCount <= 3) return '15-20 mins';
+                    if (itemCount <= 6) return '20-30 mins';
+                    return '30-45 mins';
+                }
+            },
+            standard: {
+                name: 'Standard',
+                description: 'Reliable and economical',
+                basePrice: 80,
+                pricePerItem: 5,
+                getEstimate: (itemCount) => {
+                    if (itemCount <= 3) return '30-40 mins';
+                    if (itemCount <= 6) return '40-50 mins';
+                    return '50-60 mins';
+                }
+            },
+            saver: {
+                name: 'Saver',
+                description: 'Budget-friendly option',
+                basePrice: 50,
+                pricePerItem: 3,
+                getEstimate: (itemCount) => {
+                    if (itemCount <= 3) return '45-60 mins';
+                    if (itemCount <= 6) return '60-75 mins';
+                    return '75-90 mins';
+                }
+            }
+        };
+
+        function calculateDeliveryPrice(method, itemCount) {
+            const option = deliveryOptions[method];
+            return option.basePrice + (option.pricePerItem * itemCount);
+        }
+
         function loadOrderSummary() {
             const cart = JSON.parse(localStorage.getItem('krematakape_cart')) || [];
             const summaryDiv = document.getElementById('summary-items');
@@ -246,32 +467,86 @@
                 summaryDiv.appendChild(itemRow);
             }
 
-            const shipping = 50;
-            const total = subtotal + shipping;
-
             document.getElementById('subtotal').textContent = subtotal.toFixed(2);
-            document.getElementById('shipping').textContent = shipping.toFixed(2);
+            updateDeliveryOptions();
+        }
+
+        function updateDeliveryOptions() {
+            const cart = JSON.parse(localStorage.getItem('krematakape_cart')) || [];
+            const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const methodGroup = document.getElementById('delivery-method-group');
+
+            methodGroup.innerHTML = '';
+
+            for (const [key, option] of Object.entries(deliveryOptions)) {
+                const price = calculateDeliveryPrice(key, itemCount);
+                const estimate = option.getEstimate(itemCount);
+
+                const label = document.createElement('label');
+                label.className = 'radio-option';
+                label.innerHTML = `
+                    <input type="radio" name="delivery-method" value="${key}" ${key === 'standard' ? 'checked' : ''} onchange="updateTotal()">
+                    <div class="option-content">
+                        <div class="delivery-option-header">
+                            <div>
+                                <div class="option-title">${option.name}</div>
+                                <div class="option-details">${option.description}</div>
+                                <div class="option-details"><strong>Est. ${estimate}</strong></div>
+                            </div>
+                            <div class="delivery-price">₱${price.toFixed(2)}</div>
+                        </div>
+                    </div>
+                `;
+                methodGroup.appendChild(label);
+            }
+
+            updateTotal();
+        }
+
+        function updateTotal() {
+            const cart = JSON.parse(localStorage.getItem('krematakape_cart')) || [];
+            const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const selectedMethod = document.querySelector('input[name="delivery-method"]:checked').value;
+            const subtotal = Number.parseFloat(document.getElementById('subtotal').textContent);
+
+            const deliveryPrice = calculateDeliveryPrice(selectedMethod, itemCount);
+            const total = subtotal + deliveryPrice;
+
+            document.getElementById('shipping').textContent = deliveryPrice.toFixed(2);
             document.getElementById('total').textContent = total.toFixed(2);
         }
 
-        document.getElementById('delivery-method').addEventListener('change', function() {
-            const shippingCosts = {
-                'standard': 50,
-                'express': 100,
-                'overnight': 200
-            };
-            const method = this.value;
-            if (method && shippingCosts[method]) {
-                const subtotal = Number.parseFloat(document.getElementById('subtotal').textContent);
-                const shipping = shippingCosts[method];
-                const total = subtotal + shipping;
-                document.getElementById('shipping').textContent = shipping.toFixed(2);
-                document.getElementById('total').textContent = total.toFixed(2);
+        document.querySelector('input[name="delivery-type"][value="now"]').addEventListener('change', function() {
+            if (this.checked) {
+                document.getElementById('scheduled-time-group').style.display = 'none';
+                document.getElementById('scheduled-time').removeAttribute('required');
+            }
+        });
+
+        document.querySelector('input[name="delivery-type"][value="later"]').addEventListener('change', function() {
+            if (this.checked) {
+                document.getElementById('scheduled-time-group').style.display = 'block';
+                document.getElementById('scheduled-time').setAttribute('required', 'required');
+                
+                // Set minimum time to 1 hour from now
+                const now = new Date();
+                now.setHours(now.getHours() + 1);
+                const minTime = now.toISOString().slice(0, 16);
+                document.getElementById('scheduled-time').setAttribute('min', minTime);
             }
         });
 
         document.getElementById('checkout-form').addEventListener('submit', function(e) {
             e.preventDefault();
+
+            // Validate scheduled time if "order for later" is selected
+            const deliveryType = document.querySelector('input[name="delivery-type"]:checked').value;
+            const scheduledTime = document.getElementById('scheduled-time').value;
+
+            if (deliveryType === 'later' && !scheduledTime) {
+                showError('Please select a scheduled delivery time');
+                return;
+            }
 
             const orderData = {
                 id: 'ORD-' + Date.now(),
@@ -281,7 +556,10 @@
                 address: document.getElementById('address').value,
                 city: document.getElementById('city').value,
                 zipcode: document.getElementById('zipcode').value,
-                deliveryMethod: document.getElementById('delivery-method').value,
+                deliveryType: deliveryType,
+                scheduledTime: deliveryType === 'later' ? scheduledTime : null,
+                deliveryMethod: document.querySelector('input[name="delivery-method"]:checked').value,
+                paymentMethod: document.querySelector('input[name="payment-method"]:checked').value,
                 notes: document.getElementById('notes').value,
                 items: JSON.parse(localStorage.getItem('krematakape_cart')) || [],
                 subtotal: Number.parseFloat(document.getElementById('subtotal').textContent),
@@ -302,6 +580,15 @@
             // Redirect to order tracking page
             location.href = 'OrderTracking.html?orderId=' + orderData.id;
         });
+
+        function showError(message) {
+            const errorDiv = document.getElementById('error-message');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+            setTimeout(() => {
+                errorDiv.style.display = 'none';
+            }, 5000);
+        }
 
         loadOrderSummary();
     </script>
