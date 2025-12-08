@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Krema't Kape - Log in </title>
     <link rel="stylesheet" href="styles.css">
+    <script src="auth.js"></script>
 </head>
 <body>
     <nav>
@@ -21,9 +22,11 @@
     <div class="container" id="login">
     <div class="content">
         <h1>Log In</h1>
-        <form action="#" method="post">
+        <form id="login-form">
             <label for="username">Username:</label><br>
             <input type="text" id="username" name="username" required><br>
+            <label for="email">Email:</label><br>
+            <input type="email" id="email" name="email" required><br>
             <label for="password">Password:</label><br>
             <input type="password" id="password" name="password" required><br>
             <button type="submit">Log In</button>
@@ -37,5 +40,21 @@
     <footer>
          <p>&copy; 2024 Krema't Kape Shop. All rights reserved.</p>
     </footer>
+
+    <script>
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            // Basic validation (in production, this would be server-side)
+            if (username && email && password) {
+                login_user(username, email);
+                alert('Login successful!');
+                location.href = 'index.html';
+            }
+        });
+    </script>
 </body>
 </html>

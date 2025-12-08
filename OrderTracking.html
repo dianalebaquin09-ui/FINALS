@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Krema't Kape - Order Tracking</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="auth.js"></script>
+    <style>
+        .order-tracking-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: rgba(75, 56, 50, 0.8);
+            padding: 30px;
+            border-radius: 10px;
+            color: #fff;
+        }
+
+        .order-header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #c9a66b;
+            padding-bottom: 20px;
+        }
+
+        .order-header h2 {
+            color: #c9a66b;
+            margin: 0 0 10px 0;
+        }
+
+        .order-number {
+            font-size: 1.2em;
+            color: #c9a66b;
+        }
+
+        .order-date {
+            color: #ccc;
+            font-size: 0.9em;
+        }
+
+        /* Timeline Styles */
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+            margin: 30px 0;
+        }
+
+        .timeline-step {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .timeline-step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            left: 28px;
+            top: 60px;
+            width: 2px;
+            height: 40px;
+            background-color: #555;
+        }
+
+        .timeline-step.completed:not(:last-child)::after {
+            background-color: #4caf50;
+        }
+
+        .timeline-circle {
+            width: 56px;
+            height: 56px;
+            min-width: 56px;
+            background-color: #555;
+            border: 3px solid #c9a66b;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            font-weight: bold;
+            color: #fff;
+            position: relative;
+            z-index: 1;
+        }
+
+        .timeline-step.completed .timeline-circle {
+            background-color: #4caf50;
+            border-color: #4caf50;
+        }
+
+        .timeline-content {
+            flex: 1;
+        }
+
+        .timeline-content h4 {
+            margin: 0 0 5px 0;
+            color: #c9a66b;
+            font-size: 1.1em;
+        }
+
+        .timeline-content p {
+            margin: 0;
+            color: #ccc;
+            font-size: 0.9em;
+        }
+
+        .timeline-step.completed .timeline-content p {
+            color: #fff;
+        }
+
+        /* Order Details Section */
+        .order-details {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid #555;
+        }
+
+        .details-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .details-section h3 {
+            color: #c9a66b;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .details-item {
+            margin-bottom: 10px;
+            font-size: 0.95em;
+        }
+
+        .details-item strong {
+            color: #c9a66b;
+            display: block;
+            margin-bottom: 3px;
+        }
+
+        /* Items List */
+        .order-items {
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 2px solid #555;
+        }
+
+        .order-items h3 {
+            color: #c9a66b;
+            margin-top: 0;
+        }
+
+        .items-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .item-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 15px;
+            padding: 15px;
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 5px;
+            align-items: center;
+        }
+
+        .item-row strong {
+            color: #c9a66b;
+        }
+
+        .order-total {
+            text-align: right;
+            margin-top: 20px;
+            font-size: 1.3em;
+            color: #c9a66b;
+            font-weight: bold;
+        }
+
+        .action-buttons {
+            margin-top: 30px;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-block;
+            transition: background-color 0.3s;
+        }
+
+        .btn-primary {
+            background-color: #c9a66b;
+            color: #000;
+        }
+
+        .btn-primary:hover {
+            background-color: #fff;
+        }
+
+        .btn-secondary {
+            background-color: #555;
+            color: #fff;
+        }
+
+        .btn-secondary:hover {
+            background-color: #777;
+        }
+
+        @media (max-width: 768px) {
+            .details-row {
+                grid-template-columns: 1fr;
+            }
+
+            .item-row {
+                grid-template-columns: 1fr;
+            }
+
+            .order-tracking-container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="MENU.html">Our Menu</a>
+        <a href="ContactUs.html">Contact</a>
+        <div>
+            <a href="SignUp.html">Sign Up</a>
+            <a href="LogIn.html">Log In</a>
+            <a href="Cart.html">🛒</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="content">
+            <div class="order-tracking-container">
+                <div class="order-header">
+                    <h2>Order Tracking</h2>
+                    <div class="order-number">Order #<span id="order-id"></span></div>
+                    <div class="order-date">Placed on <span id="order-date"></span></div>
+                </div>
+
+                <!-- Horizontal Timeline -->
+                <div style="text-align: center; margin: 30px 0;">
+                    <h3 style="color: #c9a66b;">Order Status</h3>
+                </div>
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; flex-wrap: wrap;">
+                    <div style="text-align: center; flex: 1; min-width: 100px;">
+                        <div style="width: 40px; height: 40px; background-color: #4caf50; border-radius: 50%; margin: 0 auto 10px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">✓</div>
+                        <div style="color: #4caf50; font-weight: bold;">Order Placed</div>
+                    </div>
+                    <div style="flex: 1; height: 3px; background-color: #555; margin: 0 10px;"></div>
+                    <div style="text-align: center; flex: 1; min-width: 100px;">
+                        <div id="step-2-circle" style="width: 40px; height: 40px; background-color: #555; border-radius: 50%; margin: 0 auto 10px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; border: 2px solid #c9a66b;">2</div>
+                        <div id="step-2-label" style="color: #ccc; font-weight: bold;">Picked Up</div>
+                    </div>
+                    <div style="flex: 1; height: 3px; background-color: #555; margin: 0 10px;"></div>
+                    <div style="text-align: center; flex: 1; min-width: 100px;">
+                        <div id="step-3-circle" style="width: 40px; height: 40px; background-color: #555; border-radius: 50%; margin: 0 auto 10px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; border: 2px solid #c9a66b;">3</div>
+                        <div id="step-3-label" style="color: #ccc; font-weight: bold;">To Ship</div>
+                    </div>
+                    <div style="flex: 1; height: 3px; background-color: #555; margin: 0 10px;"></div>
+                    <div style="text-align: center; flex: 1; min-width: 100px;">
+                        <div id="step-4-circle" style="width: 40px; height: 40px; background-color: #555; border-radius: 50%; margin: 0 auto 10px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; border: 2px solid #c9a66b;">4</div>
+                        <div id="step-4-label" style="color: #ccc; font-weight: bold;">Shipped</div>
+                    </div>
+                    <div style="flex: 1; height: 3px; background-color: #555; margin: 0 10px;"></div>
+                    <div style="text-align: center; flex: 1; min-width: 100px;">
+                        <div id="step-5-circle" style="width: 40px; height: 40px; background-color: #555; border-radius: 50%; margin: 0 auto 10px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; border: 2px solid #c9a66b;">5</div>
+                        <div id="step-5-label" style="color: #ccc; font-weight: bold;">Out for Delivery</div>
+                    </div>
+                </div>
+
+                <!-- Vertical Timeline with Details -->
+                <div class="timeline">
+                    <div class="timeline-step completed">
+                        <div class="timeline-circle">✓</div>
+                        <div class="timeline-content">
+                            <h4>Order Placed</h4>
+                            <p id="step-1-time">Your order has been placed successfully.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-step" id="timeline-step-2">
+                        <div class="timeline-circle">2</div>
+                        <div class="timeline-content">
+                            <h4>Picked Up</h4>
+                            <p id="step-2-time">Your order is being picked from our warehouse.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-step" id="timeline-step-3">
+                        <div class="timeline-circle">3</div>
+                        <div class="timeline-content">
+                            <h4>To Ship</h4>
+                            <p id="step-3-time">Your order is ready to be shipped.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-step" id="timeline-step-4">
+                        <div class="timeline-circle">4</div>
+                        <div class="timeline-content">
+                            <h4>Shipped</h4>
+                            <p id="step-4-time">Your order is on its way to you.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-step" id="timeline-step-5">
+                        <div class="timeline-circle">5</div>
+                        <div class="timeline-content">
+                            <h4>Out for Delivery</h4>
+                            <p id="step-5-time">Your order is out for delivery today.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Order Details -->
+                <div class="order-details">
+                    <div class="details-row">
+                        <div class="details-section">
+                            <h3>Shipping Address</h3>
+                            <div class="details-item">
+                                <strong id="fullname-display"></strong>
+                                <span id="address-display"></span>
+                            </div>
+                            <div class="details-item">
+                                <span id="city-display"></span>
+                            </div>
+                            <div class="details-item">
+                                <strong>Phone:</strong>
+                                <span id="phone-display"></span>
+                            </div>
+                            <div class="details-item">
+                                <strong>Email:</strong>
+                                <span id="email-display"></span>
+                            </div>
+                        </div>
+
+                        <div class="details-section">
+                            <h3>Delivery Method</h3>
+                            <div class="details-item">
+                                <span id="delivery-method-display"></span>
+                            </div>
+                            <div class="details-item" style="margin-top: 20px;">
+                                <strong>Special Instructions:</strong>
+                                <p id="notes-display" style="margin: 5px 0 0 0; color: #ccc;"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Items List -->
+                <div class="order-items">
+                    <h3>Order Items</h3>
+                    <div class="items-list" id="items-list">
+                    </div>
+                    <div class="order-total">
+                        Total: ₱<span id="total-amount">0.00</span>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="action-buttons">
+                    <a href="MENU.html" class="btn btn-primary">Continue Shopping</a>
+                    <a href="index.html" class="btn btn-secondary">Back to Home</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Krema't Kape Shop. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function getOrderIdFromURL() {
+            const urlParams = new URLSearchParams(location.search);
+            return urlParams.get('orderId');
+        }
+
+        function loadOrderData() {
+            const orderId = getOrderIdFromURL();
+            const orders = JSON.parse(localStorage.getItem('krematakape_orders')) || [];
+            const order = orders.find(o => o.id === orderId);
+
+            if (!order) {
+                document.querySelector('.order-tracking-container').innerHTML = '<h2 style="text-align: center; color: #c9a66b;">Order not found</h2>';
+                return;
+            }
+
+            // Display order header
+            document.getElementById('order-id').textContent = order.id.replace('ORD-', '');
+            const orderDate = new Date(order.orderDate);
+            document.getElementById('order-date').textContent = orderDate.toLocaleDateString() + ' ' + orderDate.toLocaleTimeString();
+
+            // Display shipping address
+            document.getElementById('fullname-display').textContent = order.fullname;
+            document.getElementById('address-display').textContent = order.address;
+            document.getElementById('city-display').textContent = order.city + ', ' + order.zipcode;
+            document.getElementById('phone-display').textContent = order.phone;
+            document.getElementById('email-display').textContent = order.email;
+
+            // Display delivery method
+            const deliveryMethods = {
+                'standard': 'Standard Delivery (5-7 days)',
+                'express': 'Express Delivery (2-3 days)',
+                'overnight': 'Overnight Delivery'
+            };
+            document.getElementById('delivery-method-display').textContent = deliveryMethods[order.deliveryMethod] || order.deliveryMethod;
+
+            // Display special instructions
+            if (order.notes) {
+                document.getElementById('notes-display').textContent = order.notes;
+            } else {
+                document.getElementById('notes-display').parentElement.style.display = 'none';
+            }
+
+            // Display items
+            const itemsList = document.getElementById('items-list');
+            for (const item of order.items) {
+                const itemElement = document.createElement('div');
+                itemElement.className = 'item-row';
+                itemElement.innerHTML = `
+                    <div><strong>${item.title}</strong></div>
+                    <div>₱${item.price.toFixed(2)}</div>
+                    <div>x${item.quantity}</div>
+                    <div style="text-align: right;">₱${(item.price * item.quantity).toFixed(2)}</div>
+                `;
+                itemsList.appendChild(itemElement);
+            }
+
+            document.getElementById('total-amount').textContent = order.total.toFixed(2);
+
+            // Update timeline based on status
+            updateTimeline(order.status);
+        }
+
+        function updateTimeline(status) {
+            const steps = {
+                'Order Placed': 1,
+                'Picked Up': 2,
+                'To Ship': 3,
+                'Shipped': 4,
+                'Out for Delivery': 5
+            };
+
+            const currentStep = steps[status] || 1;
+
+            for (let i = 2; i <= 5; i++) {
+                const circle = document.getElementById(`step-${i}-circle`);
+                const label = document.getElementById(`step-${i}-label`);
+                const timelineStep = document.getElementById(`timeline-step-${i}`);
+
+                if (i < currentStep) {
+                    // Completed step
+                    circle.innerHTML = '✓';
+                    circle.style.backgroundColor = '#4caf50';
+                    circle.style.borderColor = '#4caf50';
+                    label.style.color = '#4caf50';
+                    timelineStep.classList.add('completed');
+                } else if (i === currentStep) {
+                    // Current step
+                    circle.textContent = i;
+                    circle.style.backgroundColor = '#c9a66b';
+                    circle.style.color = '#000';
+                    circle.style.borderColor = '#c9a66b';
+                    label.style.color = '#c9a66b';
+                    timelineStep.classList.add('completed');
+                }
+            }
+        }
+
+        // Simulate order status update (for demo purposes)
+        function simulateStatusUpdate() {
+            const statuses = ['Order Placed', 'Picked Up', 'To Ship', 'Shipped', 'Out for Delivery'];
+            const orders = JSON.parse(localStorage.getItem('krematakape_orders')) || [];
+            const orderId = getOrderIdFromURL();
+            const orderIndex = orders.findIndex(o => o.id === orderId);
+
+            if (orderIndex !== -1) {
+                const currentStatusIndex = statuses.indexOf(orders[orderIndex].status);
+                if (currentStatusIndex < statuses.length - 1) {
+                    // Auto-update status every 30 seconds for demo
+                    setTimeout(() => {
+                        orders[orderIndex].status = statuses[currentStatusIndex + 1];
+                        localStorage.setItem('krematakape_orders', JSON.stringify(orders));
+                        location.reload();
+                    }, 30000);
+                }
+            }
+        }
+
+        loadOrderData();
+        simulateStatusUpdate();
+    </script>
+</body>
+</html>

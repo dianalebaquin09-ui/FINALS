@@ -5,10 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Krema't Kape - Your Cart</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="auth.js"></script>
 </head>
 <body>
     <nav>
-        <a href="HOME.html">Home</a>
+        <a href="index.html">Home</a>
         <a href="MENU.html">Our Menu</a>
         <a href="ContactUs.html">Contact</a>
         <div>
@@ -43,8 +44,9 @@
                 Total: ₱<span id="grand-total">0.00</span>
             </div>
             <div style="text-align: right; margin-top: 20px;">
+                <a href="OrderHistory.html" class="checkout-btn" style="background-color: #555; margin-right: 10px; text-decoration: none; display: inline-block;">View Orders</a>
                 <button id="clear-cart-btn" class="remove-btn" style="background-color: #d9534f; margin-right: 10px;">Clear Cart</button>
-                <button class="checkout-btn" onclick="alert('Checkout feature coming soon!')">Checkout</button>
+                <button class="checkout-btn" onclick="goToCheckout()">Checkout</button>
             </div>
         </div>
     </div>
@@ -127,6 +129,15 @@
             }
         });
         loadCart();
+
+        function goToCheckout() {
+            const cart = JSON.parse(localStorage.getItem('krematakape_cart')) || [];
+            if (cart.length === 0) {
+                alert('Your cart is empty!');
+                return;
+            }
+            location.href = 'Checkout.html';
+        }
     </script>
 </body>
 </html>

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Krema't Kape - Checkout</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="auth.js"></script>
+    <style>
+        .checkout-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .order-summary {
+            background-color: rgba(75, 56, 50, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            color: #fff;
+        }
+
+        .order-summary h3 {
+            color: #c9a66b;
+            margin-top: 0;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #555;
+        }
+
+        .summary-item:last-child {
+            border-bottom: none;
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-top: 10px;
+        }
+
+        .checkout-form {
+            background-color: rgba(75, 56, 50, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            color: #fff;
+        }
+
+        .checkout-form h3 {
+            color: #c9a66b;
+            margin-top: 0;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #555;
+            border-radius: 5px;
+            background-color: #2d2926;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            box-sizing: border-box;
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: #999;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .submit-btn {
+            background-color: #c9a66b;
+            color: #000;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+
+        .submit-btn:hover {
+            background-color: #fff;
+        }
+
+        .back-btn {
+            background-color: #555;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .back-btn:hover {
+            background-color: #777;
+        }
+
+        @media (max-width: 768px) {
+            .checkout-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="MENU.html">Our Menu</a>
+        <a href="ContactUs.html">Contact</a>
+        <div>
+            <a href="SignUp.html">Sign Up</a>
+            <a href="LogIn.html">Log In</a>
+            <a href="Cart.html">🛒</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="content">
+            <h1>Checkout</h1>
+            <a href="Cart.html" class="back-btn">← Back to Cart</a>
+
+            <div class="checkout-container">
+                <!-- Order Summary -->
+                <div class="order-summary">
+                    <h3>Order Summary</h3>
+                    <div id="summary-items"></div>
+                    <div class="summary-item">
+                        <span>Subtotal:</span>
+                        <span>₱<span id="subtotal">0.00</span></span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Shipping:</span>
+                        <span>₱<span id="shipping">50.00</span></span>
+                    </div>
+                    <div class="summary-item">
+                        <span>TOTAL:</span>
+                        <span>₱<span id="total">0.00</span></span>
+                    </div>
+                </div>
+
+                <!-- Checkout Form -->
+                <div class="checkout-form">
+                    <h3>Delivery Information</h3>
+                    <form id="checkout-form">
+                        <div class="form-group">
+                            <label for="fullname">Full Name:</label>
+                            <input type="text" id="fullname" name="fullname" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone">Phone Number:</label>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="address">Street Address:</label>
+                            <input type="text" id="address" name="address" required>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="city">City:</label>
+                                <input type="text" id="city" name="city" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="zipcode">ZIP Code:</label>
+                                <input type="text" id="zipcode" name="zipcode" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="delivery-method">Delivery Method:</label>
+                            <select id="delivery-method" name="delivery-method" required>
+                                <option value="">Select delivery method</option>
+                                <option value="standard">Standard Delivery (5-7 days) - ₱50</option>
+                                <option value="express">Express Delivery (2-3 days) - ₱100</option>
+                                <option value="overnight">Overnight Delivery - ₱200</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="notes">Special Instructions:</label>
+                            <textarea id="notes" name="notes" rows="3" placeholder="Add any special delivery instructions..."></textarea>
+                        </div>
+
+                        <button type="submit" class="submit-btn">Place Order</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Krema't Kape Shop. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function loadOrderSummary() {
+            const cart = JSON.parse(localStorage.getItem('krematakape_cart')) || [];
+            const summaryDiv = document.getElementById('summary-items');
+            let subtotal = 0;
+
+            summaryDiv.innerHTML = '';
+
+            for (const item of cart) {
+                const itemTotal = item.price * item.quantity;
+                subtotal += itemTotal;
+
+                const itemRow = document.createElement('div');
+                itemRow.className = 'summary-item';
+                itemRow.innerHTML = `
+                    <span>${item.title} x${item.quantity}</span>
+                    <span>₱${itemTotal.toFixed(2)}</span>
+                `;
+                summaryDiv.appendChild(itemRow);
+            }
+
+            const shipping = 50;
+            const total = subtotal + shipping;
+
+            document.getElementById('subtotal').textContent = subtotal.toFixed(2);
+            document.getElementById('shipping').textContent = shipping.toFixed(2);
+            document.getElementById('total').textContent = total.toFixed(2);
+        }
+
+        document.getElementById('delivery-method').addEventListener('change', function() {
+            const shippingCosts = {
+                'standard': 50,
+                'express': 100,
+                'overnight': 200
+            };
+            const method = this.value;
+            if (method && shippingCosts[method]) {
+                const subtotal = Number.parseFloat(document.getElementById('subtotal').textContent);
+                const shipping = shippingCosts[method];
+                const total = subtotal + shipping;
+                document.getElementById('shipping').textContent = shipping.toFixed(2);
+                document.getElementById('total').textContent = total.toFixed(2);
+            }
+        });
+
+        document.getElementById('checkout-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const orderData = {
+                id: 'ORD-' + Date.now(),
+                fullname: document.getElementById('fullname').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                address: document.getElementById('address').value,
+                city: document.getElementById('city').value,
+                zipcode: document.getElementById('zipcode').value,
+                deliveryMethod: document.getElementById('delivery-method').value,
+                notes: document.getElementById('notes').value,
+                items: JSON.parse(localStorage.getItem('krematakape_cart')) || [],
+                subtotal: Number.parseFloat(document.getElementById('subtotal').textContent),
+                shipping: Number.parseFloat(document.getElementById('shipping').textContent),
+                total: Number.parseFloat(document.getElementById('total').textContent),
+                orderDate: new Date().toISOString(),
+                status: 'Order Placed'
+            };
+
+            // Save order to localStorage
+            let orders = JSON.parse(localStorage.getItem('krematakape_orders')) || [];
+            orders.push(orderData);
+            localStorage.setItem('krematakape_orders', JSON.stringify(orders));
+
+            // Clear cart
+            localStorage.removeItem('krematakape_cart');
+
+            // Redirect to order tracking page
+            location.href = 'OrderTracking.html?orderId=' + orderData.id;
+        });
+
+        loadOrderSummary();
+    </script>
+</body>
+</html>

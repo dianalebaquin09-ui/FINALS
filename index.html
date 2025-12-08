@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Krema't Kape - Home Page</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="auth.js"></script>
     <style>
         .section-title {
             text-align: center;
@@ -14,6 +15,32 @@
             margin-bottom: 10px;
             text-transform: uppercase;
             letter-spacing: 2px;
+        }
+
+        .scroll-down-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            margin-top: 30px;
+            display: inline-block;
+            animation: bounce 2s infinite;
+        }
+
+        .scroll-down-btn svg {
+            width: 40px;
+            height: 40px;
+            stroke: #c9a66b;
+            stroke-width: 2;
+            fill: none;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(10px);
+            }
         }
     </style>
 </head>
@@ -37,6 +64,12 @@
             <p> Whether you crave a classic hot coffee, a refreshing iced brew, or a decadent coffee milkshake.</p>
             <p> We have the perfect drink to fuel your day.</p>
             <a href="SignUp.html">Order Now</a>
+            <br>
+            <button class="scroll-down-btn" onclick="scrollToPremiumCoffees()" title="Scroll to Premium Coffees">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+            </button>
         </div>
     </div>
 
@@ -99,5 +132,14 @@
     <footer>
         <p>&copy; 2024 Krema't Kape Shop. All rights reserved.</p>
     </footer>
+
+    <script>
+        function scrollToPremiumCoffees() {
+            const coffeeSection = document.querySelector('.section-title');
+            if (coffeeSection) {
+                coffeeSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+    </script>
 </body>
 </html>
