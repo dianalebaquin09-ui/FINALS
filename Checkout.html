@@ -7,60 +7,31 @@
     <link rel="stylesheet" href="styles.css">
     <script src="auth.js"></script>
     <style>
-        .checkout-container {
+        .checkout-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 30px;
-            max-width: 1200px;
-            margin: 0 auto;
         }
 
-        .order-summary {
+        .checkout-form-section {
             background-color: rgba(75, 56, 50, 0.8);
             padding: 20px;
             border-radius: 10px;
             color: #fff;
+            max-height: 85vh;
+            overflow-y: auto;
         }
 
-        .order-summary h3 {
+        .checkout-form-section h3 {
             color: #c9a66b;
             margin-top: 0;
-        }
-
-        .summary-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px 0;
-            border-bottom: 1px solid #555;
-        }
-
-        .summary-item:last-child {
-            border-bottom: none;
-        }
-
-        .summary-total {
-            border-bottom: none;
-            font-weight: bold;
-            font-size: 1.1em;
-            margin-top: 10px;
-            padding-top: 10px;
-            border-top: 2px solid #c9a66b;
-        }
-
-        .checkout-form {
-            background-color: rgba(75, 56, 50, 0.8);
-            padding: 20px;
-            border-radius: 10px;
-            color: #fff;
-        }
-
-        .checkout-form h3 {
-            color: #c9a66b;
-            margin-top: 0;
+            margin-bottom: 15px;
         }
 
         .form-section {
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             padding-bottom: 15px;
             border-bottom: 1px solid #555;
         }
@@ -73,31 +44,35 @@
 
         .form-section h4 {
             color: #c9a66b;
-            margin: 0 0 15px 0;
-            font-size: 1em;
+            margin: 0 0 12px 0;
+            font-size: 0.95em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .form-group {
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 5px;
+            margin-bottom: 4px;
             font-weight: bold;
+            font-size: 0.9em;
         }
 
         .form-group input,
         .form-group select,
         .form-group textarea {
             width: 100%;
-            padding: 10px;
+            padding: 8px;
             border: 1px solid #555;
             border-radius: 5px;
             background-color: #2d2926;
             color: #fff;
             font-family: Arial, sans-serif;
             box-sizing: border-box;
+            font-size: 0.9em;
         }
 
         .form-group input::placeholder,
@@ -108,20 +83,20 @@
         .form-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 15px;
+            gap: 12px;
         }
 
         .radio-group {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 8px;
         }
 
         .radio-option {
             display: flex;
             align-items: flex-start;
             gap: 10px;
-            padding: 12px;
+            padding: 10px;
             background-color: #2d2926;
             border-radius: 5px;
             cursor: pointer;
@@ -135,7 +110,7 @@
 
         .radio-option input[type="radio"] {
             width: auto;
-            margin-top: 3px;
+            margin-top: 2px;
             cursor: pointer;
         }
 
@@ -152,37 +127,83 @@
         .option-title {
             font-weight: bold;
             color: #c9a66b;
-            margin-bottom: 3px;
+            margin-bottom: 2px;
+            font-size: 0.9em;
         }
 
         .option-details {
-            font-size: 0.85em;
+            font-size: 0.8em;
             color: #ccc;
-            line-height: 1.4;
+            line-height: 1.3;
         }
 
         .delivery-option-header {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 5px;
+            gap: 10px;
         }
 
         .delivery-price {
             color: #c9a66b;
             font-weight: bold;
+            font-size: 0.9em;
+            white-space: nowrap;
+        }
+
+        .order-summary-sticky {
+            position: sticky;
+            top: 20px;
+            background-color: rgba(75, 56, 50, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            color: #fff;
+            border: 2px solid #c9a66b;
+        }
+
+        .order-summary-sticky h3 {
+            color: #c9a66b;
+            margin: 0 0 15px 0;
+            font-size: 1.1em;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #555;
+            font-size: 0.9em;
+        }
+
+        .summary-item:last-of-type {
+            border-bottom: none;
+        }
+
+        .summary-total {
+            border-bottom: none;
+            font-weight: bold;
+            font-size: 1.3em;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 2px solid #c9a66b;
+            color: #c9a66b;
+        }
+
+        .place-order-section {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #c9a66b;
         }
 
         .submit-btn {
             background-color: #c9a66b;
             color: #000;
-            padding: 12px 30px;
+            padding: 12px 20px;
             border: none;
             border-radius: 5px;
             font-size: 1em;
             font-weight: bold;
             cursor: pointer;
-            margin-top: 20px;
             width: 100%;
             transition: background-color 0.3s;
         }
@@ -222,8 +243,13 @@
         }
 
         @media (max-width: 768px) {
-            .checkout-container {
+            .checkout-wrapper {
                 grid-template-columns: 1fr;
+            }
+
+            .order-summary-sticky {
+                position: relative;
+                top: 0;
             }
 
             .form-row {
@@ -249,27 +275,9 @@
             <h1>Checkout</h1>
             <a href="Cart.html" class="back-btn">← Back to Cart</a>
 
-            <div class="checkout-container">
-                <!-- Order Summary -->
-                <div class="order-summary">
-                    <h3>Order Summary</h3>
-                    <div id="summary-items"></div>
-                    <div class="summary-item">
-                        <span>Subtotal:</span>
-                        <span>₱<span id="subtotal">0.00</span></span>
-                    </div>
-                    <div class="summary-item">
-                        <span>Shipping:</span>
-                        <span>₱<span id="shipping">50.00</span></span>
-                    </div>
-                    <div class="summary-item">
-                        <span>TOTAL:</span>
-                        <span>₱<span id="total">0.00</span></span>
-                    </div>
-                </div>
-
+            <div class="checkout-wrapper">
                 <!-- Checkout Form -->
-                <div class="checkout-form">
+                <div class="checkout-form-section">
                     <h3>Complete Your Order</h3>
                     <div class="error-message" id="error-message"></div>
                     
@@ -392,9 +400,29 @@
                                 <textarea id="notes" name="notes" rows="3" placeholder="E.g., Ring doorbell twice, leave at gate..."></textarea>
                             </div>
                         </div>
-
-                        <button type="submit" class="submit-btn">Place Order</button>
                     </form>
+                </div>
+
+                <!-- Order Summary Sticky -->
+                <div class="order-summary-sticky">
+                    <h3>Order Summary</h3>
+                    <div id="summary-items"></div>
+                    <div class="summary-item">
+                        <span>Subtotal:</span>
+                        <span>₱<span id="subtotal">0.00</span></span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Delivery:</span>
+                        <span>₱<span id="shipping">50.00</span></span>
+                    </div>
+                    <div class="summary-item summary-total">
+                        <span>TOTAL:</span>
+                        <span>₱<span id="total">0.00</span></span>
+                    </div>
+
+                    <div class="place-order-section">
+                        <button type="submit" form="checkout-form" class="submit-btn">Place Order</button>
+                    </div>
                 </div>
             </div>
         </div>
